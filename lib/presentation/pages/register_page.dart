@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:punyatoko/data/constants/assets_color.dart';
 import 'package:punyatoko/data/constants/assets_key.dart';
+import 'package:punyatoko/data/models/post/register_model.dart';
 import 'package:punyatoko/presentation/bloc/loader/loader_button_cubit.dart';
 import 'package:punyatoko/presentation/widgets/buttons/green_button.dart';
 import 'package:punyatoko/presentation/widgets/decorations/circle_step_indicator.dart';
@@ -12,6 +13,7 @@ import 'package:punyatoko/presentation/widgets/radios/radio_with_text.dart';
 import 'package:punyatoko/presentation/widgets/textforms/password_form.dart';
 import 'package:punyatoko/presentation/widgets/textforms/text_form.dart';
 import 'package:punyatoko/presentation/widgets/texts/poppins_text.dart';
+import 'package:punyatoko/util/message.dart';
 
 import '../bloc/register/register_bloc.dart';
 
@@ -192,11 +194,42 @@ class _RegisterPageState extends State<RegisterPage> {
                       callback: () async {
                         bool isValidate =
                             AssetsKey.formKeyRegister.currentState!.validate();
+                        if (isValidate) {
+                          if (_registerBloc.state.gender == '') {
+                            Message.showErrorToast(
+                                msg: "Anda belum memilih jenis kelamin");
+                          } else {
+                            _registerBloc.add(RegisterAccountEvent(
+                                loaderButtonCubit: _loaderButtonCubit,
+                                model: RegisterModel(
+                                    name: _fullNameFormController.text,
+                                    email: _emailFormController.text,
+                                    password: _passwordFormController.text,
+                                    passwordConfirmation:
+                                        _passwordConfirmationFormController
+                                            .text,
+                                    age:
+                                        int.tryParse(_ageFormController.text) ??
+                                            0,
+                                    gender: _registerBloc.state.gender)));
+                          }
+                        }
                       }),
                 ),
                 const SizedBox(
                   height: 30,
                 ),
+                BlocListener<RegisterBloc, RegisterState>(
+                  listener: (context, state) {
+                    if (state is RegisterFailed) {
+                      Message.showErrorToast(msg: state.msgError);
+                    } else if (state is RegisterSuccess) {
+                      Message.showSuccessToast(
+                          msg: "Akun Anda Berhasil didaftarkan");
+                    }
+                  },
+                  child: const SizedBox(),
+                )
               ],
             ),
           ),

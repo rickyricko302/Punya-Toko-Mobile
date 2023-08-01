@@ -8,4 +8,5 @@ class AssetsColor {
   static Color lightGrey = HexColor("#D3D3D3");
   static Color white = Colors.white;
   static Color grey = HexColor("#6D6D64");
+  static Color red = HexColor("#F31559");
 }

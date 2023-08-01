@@ -14,3 +14,12 @@ class RegisterChangeGenderEvent extends RegisterEvent {
   @override
   List<Object> get props => [gender];
 }
+
+class RegisterAccountEvent extends RegisterEvent {
+  final RegisterModel model;
+  final LoaderButtonCubit loaderButtonCubit;
+  const RegisterAccountEvent(
+      {required this.model, required this.loaderButtonCubit});
+  @override
+  List<Object> get props => [model, loaderButtonCubit];
+}
