@@ -15,6 +15,7 @@ import 'package:punyatoko/presentation/widgets/textforms/text_form.dart';
 import 'package:punyatoko/presentation/widgets/texts/poppins_text.dart';
 import 'package:punyatoko/util/message.dart';
 
+import '../../data/constants/routes_page.dart';
 import '../bloc/register/register_bloc.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -226,6 +227,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     } else if (state is RegisterSuccess) {
                       Message.showSuccessToast(
                           msg: "Akun Anda Berhasil didaftarkan");
+                      Navigator.pushReplacementNamed(
+                          context, RoutesPage.createStorePage);
                     }
                   },
                   child: const SizedBox(),

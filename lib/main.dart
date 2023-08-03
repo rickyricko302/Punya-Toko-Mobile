@@ -3,21 +3,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:punyatoko/data/constants/assets_color.dart';
 import 'package:punyatoko/data/constants/assets_key.dart';
 import 'package:punyatoko/data/constants/routes_page.dart';
 import 'package:punyatoko/data/repositories/register_repository.dart';
 import 'package:punyatoko/domain/usecases/register_usecase.dart';
 import 'package:punyatoko/presentation/bloc/loader/loader_button_cubit.dart';
+import 'package:punyatoko/presentation/pages/create_store_page.dart';
 import 'package:punyatoko/presentation/pages/on_boarding_page.dart';
 import 'package:punyatoko/presentation/pages/register_page.dart';
 import 'package:http/http.dart' as http;
 import 'presentation/bloc/register/register_bloc.dart';
 
-void main() {
+void main() async {
   FlavorConfig(variables: {
     'base_url': "http://192.168.142.222:8000/api",
   });
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -49,11 +52,12 @@ class MyApp extends StatelessWidget {
               builder: FToastBuilder(),
               theme: ThemeData(
                   useMaterial3: true, colorSchemeSeed: AssetsColor.green),
-              home: const OnBoardingPage(),
               initialRoute: RoutesPage.onBoardingPage,
               routes: {
                 RoutesPage.onBoardingPage: (context) => const OnBoardingPage(),
-                RoutesPage.registerPage: (context) => const RegisterPage()
+                RoutesPage.registerPage: (context) => const RegisterPage(),
+                RoutesPage.createStorePage: (context) =>
+                    const CreateStorePages()
               },
             ),
           );

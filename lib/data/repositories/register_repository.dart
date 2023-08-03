@@ -1,7 +1,8 @@
+import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:http/http.dart' as http;
+import 'package:punyatoko/data/datasources/local_storage.dart';
 import 'package:punyatoko/data/models/post/register_model.dart';
 import 'package:punyatoko/util/helper.dart';
 
@@ -18,11 +19,12 @@ class RegisterRepositoryImp implements RegisterRepository {
   @override
   Future<int> createAccount({required RegisterModel registerModel}) async {
     var res = await client.post(Uri.parse(ApiClient.register),
-        headers: Helper.headerWithoutToken(), body: registerModel.toJson());
-    log(Helper.generateException(res));
+        headers: ApiClient.headersWithoutToken(), body: registerModel.toJson());
+    log(Helper.generateResponse(res));
     if (res.statusCode != 200) {
       throw Helper.messageShow(res);
     }
+    LocalStorage.saveToken(jsonDecode(res.body)['token']);
     return 200;
   }
 }
