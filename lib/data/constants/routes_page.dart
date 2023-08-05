@@ -3,4 +3,5 @@ class RoutesPage {
   static const registerPage = '/register';
   static const createStorePage = '/create-store';
   static const loginPage = '/login';
+  static const homePage = '/home';
 }

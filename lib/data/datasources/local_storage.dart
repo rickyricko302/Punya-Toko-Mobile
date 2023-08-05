@@ -8,7 +8,7 @@ class LocalStorage {
     box.write("token", token);
   }
 
-  static String getToken() {
+  static String? getToken() {
     return box.read("token");
   }
 }

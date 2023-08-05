@@ -12,6 +12,7 @@ import 'package:punyatoko/domain/usecases/register_usecase.dart';
 import 'package:punyatoko/presentation/bloc/loader/loader_button_cubit.dart';
 import 'package:punyatoko/presentation/bloc/login/login_bloc.dart';
 import 'package:punyatoko/presentation/pages/create_store_page.dart';
+import 'package:punyatoko/presentation/pages/home_page.dart';
 import 'package:punyatoko/presentation/pages/login_page.dart';
 import 'package:punyatoko/presentation/pages/on_boarding_page.dart';
 import 'package:punyatoko/presentation/pages/register_page.dart';
@@ -68,7 +69,8 @@ class MyApp extends StatelessWidget {
                 RoutesPage.registerPage: (context) => const RegisterPage(),
                 RoutesPage.createStorePage: (context) =>
                     const CreateStorePages(),
-                RoutesPage.loginPage: (context) => const LoginPage()
+                RoutesPage.loginPage: (context) => const LoginPage(),
+                RoutesPage.homePage: (context) => const HomePage()
               },
             ),
           );

@@ -18,7 +18,7 @@ class CreateStoreBloc extends Bloc<CreateStoreEvent, CreateStoreState> {
       try {
         emit(CreateStoreInitial());
         await createStoreUseCase.createStore(
-            token: LocalStorage.getToken(), model: event.model);
+            token: LocalStorage.getToken() ?? "", model: event.model);
         emit(CreateStoreSuccess());
       } catch (e) {
         emit(CreateStoreFailed(msgError: e.toString()));
