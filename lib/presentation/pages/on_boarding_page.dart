@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:punyatoko/data/constants/assets_color.dart';
-import 'package:punyatoko/presentation/bloc/loader/loader_button_cubit.dart';
 import 'package:punyatoko/presentation/widgets/buttons/green_button.dart';
 import 'package:punyatoko/presentation/widgets/buttons/white_button.dart';
 import 'package:punyatoko/presentation/widgets/texts/poppins_text.dart';
@@ -53,10 +51,7 @@ class OnBoardingPage extends StatelessWidget {
                 GreenButton(
                     text: "Pergi Masuk",
                     callback: () async {
-                      context.read<LoaderButtonCubit>().setLoading(true);
-                      await Future.delayed(const Duration(seconds: 3), () {
-                        context.read<LoaderButtonCubit>().setLoading(false);
-                      });
+                      Navigator.pushNamed(context, RoutesPage.loginPage);
                     }),
                 const SizedBox(
                   height: 20,

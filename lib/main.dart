@@ -7,18 +7,21 @@ import 'package:get_storage/get_storage.dart';
 import 'package:punyatoko/data/constants/assets_color.dart';
 import 'package:punyatoko/data/constants/assets_key.dart';
 import 'package:punyatoko/data/constants/routes_page.dart';
-import 'package:punyatoko/data/repositories/register_repository.dart';
+import 'package:punyatoko/data/repositories/auth_repository.dart';
 import 'package:punyatoko/domain/usecases/register_usecase.dart';
 import 'package:punyatoko/presentation/bloc/loader/loader_button_cubit.dart';
+import 'package:punyatoko/presentation/bloc/login/login_bloc.dart';
 import 'package:punyatoko/presentation/pages/create_store_page.dart';
+import 'package:punyatoko/presentation/pages/login_page.dart';
 import 'package:punyatoko/presentation/pages/on_boarding_page.dart';
 import 'package:punyatoko/presentation/pages/register_page.dart';
 import 'package:http/http.dart' as http;
+import 'domain/usecases/login_usecase.dart';
 import 'presentation/bloc/register/register_bloc.dart';
 
 void main() async {
   FlavorConfig(variables: {
-    'base_url': "http://192.168.142.222:8000/api",
+    'base_url': "http://192.168.109.222:8000/api",
   });
   await GetStorage.init();
   runApp(const MyApp());
@@ -43,8 +46,15 @@ class MyApp extends StatelessWidget {
                 create: (context) => RegisterBloc(
                     registerUseCase: RegisterUseCase(
                         registerRepositoryImp:
-                            RegisterRepositoryImp(client: http.Client()))),
+                            AuthRepositoryImp(client: http.Client()))),
               ),
+              BlocProvider(
+                  create: (context) => LoginBloc(
+                        loaderButtonCubit: context.read<LoaderButtonCubit>(),
+                        loginUseCase: LoginUseCase(
+                            authRepositoryImp:
+                                AuthRepositoryImp(client: http.Client())),
+                      ))
             ],
             child: MaterialApp(
               title: 'Punya Toko',
@@ -57,7 +67,8 @@ class MyApp extends StatelessWidget {
                 RoutesPage.onBoardingPage: (context) => const OnBoardingPage(),
                 RoutesPage.registerPage: (context) => const RegisterPage(),
                 RoutesPage.createStorePage: (context) =>
-                    const CreateStorePages()
+                    const CreateStorePages(),
+                RoutesPage.loginPage: (context) => const LoginPage()
               },
             ),
           );

@@ -193,6 +193,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: GreenButton(
                       text: "Daftarkan Akun",
                       callback: () async {
+                        FocusScope.of(context).unfocus();
                         bool isValidate =
                             AssetsKey.formKeyRegister.currentState!.validate();
                         if (isValidate) {

@@ -18,4 +18,5 @@ class ApiClient {
 
   static String register = "$_baseUrl/auth/register";
   static String createStore = "$_baseUrl/store";
+  static String login = "$_baseUrl/auth/login";
 }
