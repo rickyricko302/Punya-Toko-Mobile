@@ -1,16 +1,23 @@
 # punyatoko
 
-A new Flutter project.
+Rencananya ini adalah aplikasi mobile untuk mengelola stock barang dan mencatat transaksi di toko.
 
-## Getting Started
+## Todo List
+- [x] On Boarding
+- [x] Registrasi Akun
+- [x] Login Akun
+- [ ] Home (List Transaksi)
+- [ ] CRUD Stok Barang
+- [ ] CRUD Kategori Barang
+- [ ] Profil
+- [ ] .......?
 
-This project is a starting point for a Flutter application.
+## Teknologi
+- Flutter 3.7.12 (Front End)
+  - State Management flutter bloc
+  - Clean Architecture
+- PHP Laravel (Back End)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Team
+- Ricky Verdiyanto
+- ....? (Mau bergabung mengembangkan bersama saya)
