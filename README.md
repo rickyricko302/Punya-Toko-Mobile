@@ -8,7 +8,7 @@ Rencananya ini adalah aplikasi mobile untuk mengelola stock barang dan mencatat 
 - [x] Login Akun
 - [x] Remember Login 
 - [ ] Home (List Transaksi)
-- [ ] CRUD Stok Barang
+- [ ] CRUD Barang
 - [ ] CRUD Kategori Barang
 - [ ] Profil
 - [ ] .......?
