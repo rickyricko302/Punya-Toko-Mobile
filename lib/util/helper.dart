@@ -11,4 +11,22 @@ class Helper {
   static String messageShow(http.Response res) {
     return jsonDecode(res.body)['message'];
   }
+
+  /// Ini adalah fungsi untuk mengubah string ke mata uang indonesia
+  ///
+  /// Parameter :
+  /// - value : String yang akan diubah
+  /// - separator : Pemisah 3 digit, default(.)
+  /// - trailing : penambah diakhir string
+  ///
+  /// Example :
+  /// ```dart
+  /// print("Rp ${Utils.rupiah('10000')}"); //Rp 10.000
+  /// ```
+  static String rupiah(value, {String separator = '.', String trailing = ''}) {
+    return value.toString().replaceAllMapped(
+            RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+            (Match m) => '${m[1]}$separator') +
+        trailing;
+  }
 }

@@ -71,8 +71,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                Row(
-                  children: const [
+                const Row(
+                  children: [
                     StepIndicator(),
                     SizedBox(
                       width: 5,

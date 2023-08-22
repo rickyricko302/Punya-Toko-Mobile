@@ -70,8 +70,8 @@ class _CreateStoreBodyState extends State<CreateStoreBody> {
                             const SizedBox(
                               height: 20,
                             ),
-                            Row(
-                              children: const [
+                            const Row(
+                              children: [
                                 CircleStepIndicator(),
                                 SizedBox(
                                   width: 5,
