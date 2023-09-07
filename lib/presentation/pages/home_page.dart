@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:punyatoko/data/constants/assets_color.dart';
-import 'package:punyatoko/presentation/widgets/layouts/home_no_transaction.dart';
+import 'package:punyatoko/data/constants/routes_page.dart';
 import 'package:punyatoko/presentation/widgets/separators/separator_dash.dart';
 import 'package:punyatoko/presentation/widgets/texts/poppins_text.dart';
 import 'package:punyatoko/util/extension.dart';
 import 'package:punyatoko/util/helper.dart';
+
+import '../widgets/layouts/home_list_transaction.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -74,14 +76,6 @@ class HomePage extends StatelessWidget {
                             fontSize: 15.sp,
                             color: AssetsColor.grey),
                       ),
-                      // const Padding(
-                      //   padding: EdgeInsets.only(
-                      //     left: 20,
-                      //     right: 20,
-                      //     top: 15,
-                      //   ),
-                      //   child: Divider(),
-                      // )
                     ],
                   ),
                 )
@@ -161,19 +155,17 @@ class HomePage extends StatelessWidget {
                       color: AssetsColor.grey,
                     )),
                 //no data
-                const HomeNoTransaction()
-
+                // const HomeNoTransaction()
                 // has data
-                // HomeListTransaction()
+                const HomeListTransaction()
               ],
             )),
       )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        backgroundColor: AssetsColor.red,
         child: const Icon(
           Icons.add,
-          color: Colors.white,
+          // color: Colors.white,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -182,7 +174,10 @@ class HomePage extends StatelessWidget {
           backgroundColor: AssetsColor.youngGreen,
           selectedItemColor: AssetsColor.white,
           unselectedItemColor: AssetsColor.white,
-          onTap: (index) {},
+          onTap: (index) {
+            Navigator.pushNamed(context,
+                index == 0 ? RoutesPage.listProduct : RoutesPage.listCategory);
+          },
           items: [
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -194,7 +189,7 @@ class HomePage extends StatelessWidget {
                 ),
                 label: "Kelola Produk"),
             const BottomNavigationBarItem(
-                icon: Icon(Icons.manage_accounts), label: "Kelola Akun")
+                icon: Icon(Icons.sell_outlined), label: "Kelola Kategori")
           ]),
     );
   }

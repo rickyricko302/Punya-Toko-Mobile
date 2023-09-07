@@ -18,7 +18,7 @@ class StoreRepositoryImp implements StoreRepository {
   Future<int> createStore(
       {required String token, required CreateStoreModel model}) async {
     var res = await http.post(Uri.parse(ApiClient.createStore),
-        headers: ApiClient.headersWithToken(token), body: model.toJson());
+        headers: ApiClient.headersWithToken(), body: model.toJson());
     log(Helper.generateResponse(res));
     if (res.statusCode != 200) {
       throw Helper.messageShow(res);

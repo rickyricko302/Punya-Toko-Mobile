@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:punyatoko/data/constants/routes_page.dart';
 import 'package:punyatoko/data/models/post/login_model.dart';
 import 'package:punyatoko/presentation/widgets/buttons/green_button.dart';
 import 'package:punyatoko/presentation/widgets/textforms/password_form.dart';
@@ -110,6 +111,8 @@ class _LoginPageState extends State<LoginPage> {
                                 if (state is LoginSuccess) {
                                   Message.showSuccessToast(
                                       msg: "Anda berhasil masuk");
+                                  Navigator.pushReplacementNamed(
+                                      context, RoutesPage.homePage);
                                 } else if (state is LoginFailed) {
                                   Message.showErrorToast(msg: state.msgError);
                                 }

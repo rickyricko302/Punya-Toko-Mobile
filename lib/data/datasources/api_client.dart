@@ -1,9 +1,13 @@
 import 'package:flutter_flavor/flutter_flavor.dart';
+import 'package:punyatoko/data/datasources/local_storage.dart';
 
 class ApiClient {
   /// header dengan token user
-  static Map<String, String> headersWithToken(String token) {
-    return {"Accept": "application/json", "authorization": "Bearer $token"};
+  static Map<String, String> headersWithToken() {
+    return {
+      "Accept": "application/json",
+      "authorization": "Bearer ${LocalStorage.getToken()}"
+    };
   }
 
   /// header tanap token user
@@ -19,4 +23,8 @@ class ApiClient {
   static String register = "$_baseUrl/auth/register";
   static String createStore = "$_baseUrl/store";
   static String login = "$_baseUrl/auth/login";
+  static String category = "$_baseUrl/category";
+  static String deleteCategory(int idCategory) {
+    return "$_baseUrl/category/$idCategory";
+  }
 }

@@ -12,10 +12,13 @@ import 'package:punyatoko/data/repositories/auth_repository.dart';
 import 'package:punyatoko/domain/usecases/register_usecase.dart';
 import 'package:punyatoko/presentation/bloc/loader/loader_button_cubit.dart';
 import 'package:punyatoko/presentation/bloc/login/login_bloc.dart';
+import 'package:punyatoko/presentation/pages/category/category_page.dart';
 import 'package:punyatoko/presentation/pages/create_store_page.dart';
 import 'package:punyatoko/presentation/pages/home_page.dart';
 import 'package:punyatoko/presentation/pages/login_page.dart';
 import 'package:punyatoko/presentation/pages/on_boarding_page.dart';
+import 'package:punyatoko/presentation/pages/product/product_create_page.dart';
+import 'package:punyatoko/presentation/pages/product/product_listing_page.dart';
 import 'package:punyatoko/presentation/pages/register_page.dart';
 import 'package:http/http.dart' as http;
 import 'domain/usecases/login_usecase.dart';
@@ -23,7 +26,7 @@ import 'presentation/bloc/register/register_bloc.dart';
 
 void main() async {
   FlavorConfig(variables: {
-    'base_url': "http://192.168.109.222:8000/api",
+    'base_url': "http://192.168.221.222:8000/api",
   });
   await GetStorage.init();
   runApp(const MyApp());
@@ -37,6 +40,7 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: true,
+        useInheritedMediaQuery: true,
         splitScreenMode: true,
         builder: (context, child) {
           return MultiBlocProvider(
@@ -71,7 +75,12 @@ class MyApp extends StatelessWidget {
                 RoutesPage.createStorePage: (context) =>
                     const CreateStorePages(),
                 RoutesPage.loginPage: (context) => const LoginPage(),
-                RoutesPage.homePage: (context) => const HomePage()
+                RoutesPage.homePage: (context) => const HomePage(),
+                RoutesPage.listProduct: (context) => const ProductListingPage(),
+                RoutesPage.createProduct: (context) =>
+                    const ProductCreatePage(),
+                RoutesPage.listCategory: (context) =>
+                    const CategoryListingPage(),
               },
               localizationsDelegates: const [
                 GlobalMaterialLocalizations.delegate,
