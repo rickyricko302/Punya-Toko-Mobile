@@ -8,9 +8,11 @@ import 'package:punyatoko/presentation/bloc/loader/loader_button_cubit.dart';
 import 'package:punyatoko/presentation/widgets/buttons/green_button.dart';
 import 'package:punyatoko/presentation/widgets/textforms/text_form.dart';
 import 'package:punyatoko/presentation/widgets/texts/poppins_text.dart';
-import 'package:punyatoko/util/bottomsheet.dart';
+import 'package:punyatoko/util/bottomsheet_helper.dart';
 
 import '../../../data/constants/assets_color.dart';
+import '../../../data/constants/routes_page.dart';
+import '../../../util/message.dart';
 import '../../widgets/textforms/rupiah_form.dart';
 import '../../widgets/textforms/select_form.dart';
 
@@ -33,7 +35,7 @@ class ProductCreateBody extends StatefulWidget {
   const ProductCreateBody({Key? key}) : super(key: key);
 
   @override
-  _ProductCreateBodyState createState() => _ProductCreateBodyState();
+  State<ProductCreateBody> createState() => _ProductCreateBodyState();
 }
 
 class _ProductCreateBodyState extends State<ProductCreateBody> {
@@ -126,6 +128,22 @@ class _ProductCreateBodyState extends State<ProductCreateBody> {
               ),
               const SizedBox(
                 height: 30,
+              ),
+              BlocListener<CreateProductBloc, CreateProductState>(
+                listener: (context, state) {
+                  if (state is CreateProductSuccess) {
+                    Message.showSuccessToast(msg: "Berhasil membuat produk");
+                    Navigator.popUntil(
+                        context,
+                        (route) =>
+                            route.settings.name == RoutesPage.createProduct);
+                  } else if (state is CreateProductFailed) {
+                    Message.showErrorToast(msg: "Gagal membuat product");
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  }
+                },
+                child: Container(),
               )
             ],
           ),

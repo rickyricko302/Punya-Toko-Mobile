@@ -9,16 +9,19 @@ class TextForm extends StatelessWidget {
       required this.formController,
       required this.hint,
       required this.textInputType,
-      required this.textInputAction})
+      required this.textInputAction,
+      this.autoFocus = false})
       : super(key: key);
   final TextEditingController formController;
   final String hint;
   final TextInputType textInputType;
   final TextInputAction textInputAction;
+  final bool autoFocus;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofocus: autoFocus,
       controller: formController,
       style: GoogleFonts.poppins(),
       keyboardType: textInputType,

@@ -21,12 +21,13 @@ import 'package:punyatoko/presentation/pages/product/product_create_page.dart';
 import 'package:punyatoko/presentation/pages/product/product_listing_page.dart';
 import 'package:punyatoko/presentation/pages/register_page.dart';
 import 'package:http/http.dart' as http;
+import 'data/repositories/category_repository.dart';
 import 'domain/usecases/login_usecase.dart';
 import 'presentation/bloc/register/register_bloc.dart';
 
 void main() async {
   FlavorConfig(variables: {
-    'base_url': "http://192.168.221.222:8000/api",
+    'base_url': "http://192.168.98.222:8000/api",
   });
   await GetStorage.init();
   runApp(const MyApp());
@@ -43,51 +44,60 @@ class MyApp extends StatelessWidget {
         useInheritedMediaQuery: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return MultiBlocProvider(
+          return MultiRepositoryProvider(
             providers: [
-              BlocProvider(
-                create: (context) => LoaderButtonCubit(),
+              RepositoryProvider(
+                create: (context) => CategoryRepositoryImp(),
               ),
-              BlocProvider(
-                create: (context) => RegisterBloc(
-                    registerUseCase: RegisterUseCase(
-                        registerRepositoryImp:
-                            AuthRepositoryImp(client: http.Client()))),
-              ),
-              BlocProvider(
-                  create: (context) => LoginBloc(
-                        loaderButtonCubit: context.read<LoaderButtonCubit>(),
-                        loginUseCase: LoginUseCase(
-                            authRepositoryImp:
-                                AuthRepositoryImp(client: http.Client())),
-                      ))
             ],
-            child: MaterialApp(
-              title: 'Punya Toko',
-              navigatorKey: AssetsKey.navigatorKey,
-              builder: FToastBuilder(),
-              theme: ThemeData(
-                  useMaterial3: true, colorSchemeSeed: AssetsColor.green),
-              initialRoute: RoutesPage.onBoardingPage,
-              routes: {
-                RoutesPage.onBoardingPage: (context) => const OnBoardingPage(),
-                RoutesPage.registerPage: (context) => const RegisterPage(),
-                RoutesPage.createStorePage: (context) =>
-                    const CreateStorePages(),
-                RoutesPage.loginPage: (context) => const LoginPage(),
-                RoutesPage.homePage: (context) => const HomePage(),
-                RoutesPage.listProduct: (context) => const ProductListingPage(),
-                RoutesPage.createProduct: (context) =>
-                    const ProductCreatePage(),
-                RoutesPage.listCategory: (context) =>
-                    const CategoryListingPage(),
-              },
-              localizationsDelegates: const [
-                GlobalMaterialLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => LoaderButtonCubit(),
+                ),
+                BlocProvider(
+                  create: (context) => RegisterBloc(
+                      registerUseCase: RegisterUseCase(
+                          registerRepositoryImp:
+                              AuthRepositoryImp(client: http.Client()))),
+                ),
+                BlocProvider(
+                    create: (context) => LoginBloc(
+                          loaderButtonCubit: context.read<LoaderButtonCubit>(),
+                          loginUseCase: LoginUseCase(
+                              authRepositoryImp:
+                                  AuthRepositoryImp(client: http.Client())),
+                        ))
               ],
-              supportedLocales: const [Locale('in'), Locale('en')],
+              child: MaterialApp(
+                title: 'Punya Toko',
+                navigatorKey: AssetsKey.navigatorKey,
+                builder: FToastBuilder(),
+                theme: ThemeData(
+                    useMaterial3: true, colorSchemeSeed: AssetsColor.green),
+                initialRoute: RoutesPage.onBoardingPage,
+                routes: {
+                  RoutesPage.onBoardingPage: (context) =>
+                      const OnBoardingPage(),
+                  RoutesPage.registerPage: (context) => const RegisterPage(),
+                  RoutesPage.createStorePage: (context) =>
+                      const CreateStorePages(),
+                  RoutesPage.loginPage: (context) => const LoginPage(),
+                  RoutesPage.homePage: (context) => const HomePage(),
+                  RoutesPage.listProduct: (context) =>
+                      const ProductListingPage(),
+                  RoutesPage.createProduct: (context) =>
+                      const ProductCreatePage(),
+                  RoutesPage.listCategory: (context) =>
+                      const CategoryListingPage(),
+                },
+                localizationsDelegates: const [
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
+                supportedLocales: const [Locale('in'), Locale('en')],
+              ),
             ),
           );
         });

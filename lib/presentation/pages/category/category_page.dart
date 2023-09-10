@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:punyatoko/data/constants/routes_page.dart';
 import 'package:punyatoko/data/repositories/category_repository.dart';
+import 'package:punyatoko/domain/usecases/create_category_usecase.dart';
 import 'package:punyatoko/domain/usecases/delete_category_usecase.dart';
 import 'package:punyatoko/domain/usecases/get_category_usecase.dart';
+import 'package:punyatoko/domain/usecases/update_category_usecase.dart';
 import 'package:punyatoko/presentation/bloc/category/category_bloc.dart';
+import 'package:punyatoko/presentation/bloc/loader/loader_button_cubit.dart';
 import 'package:punyatoko/presentation/widgets/buttons/green_button.dart';
 import 'package:punyatoko/presentation/widgets/buttons/white_button.dart';
 import 'package:punyatoko/presentation/widgets/texts/poppins_text.dart';
+import 'package:punyatoko/util/bottomsheet_helper.dart';
 import 'package:punyatoko/util/message.dart';
 
 import '../../../data/constants/assets_color.dart';
-import '../../../data/constants/routes_page.dart';
 import '../../../domain/entities/category_entity.dart';
 import '../../widgets/separators/separator_dash.dart';
 
@@ -29,9 +33,19 @@ class _CategoryListingPageState extends State<CategoryListingPage> {
     return BlocProvider(
       create: (context) => CategoryBloc(
           getCategoryUseCase: GetCategoryUseCase(
-              categoryRepositoryImp: CategoryRepositoryImp()),
+              categoryRepositoryImp:
+                  RepositoryProvider.of<CategoryRepositoryImp>(context)),
           deleteCategoryUseCase: DeleteCategoryUseCase(
-              categoryRepositoryImp: CategoryRepositoryImp())),
+              categoryRepositoryImp:
+                  RepositoryProvider.of<CategoryRepositoryImp>(context)),
+          createCategoryUseCase: CreateCategoryUseCase(
+              categoryRepositoryImp:
+                  RepositoryProvider.of<CategoryRepositoryImp>(context)),
+          updateCategoryUseCase: UpdateCategoryUseCase(
+              categoryRepositoryImp:
+                  RepositoryProvider.of<CategoryRepositoryImp>(context)),
+          loaderButtonCubit: context.read<LoaderButtonCubit>())
+        ..add(CategoryEventGetData()),
       child: const CategoryBody(),
     );
   }
@@ -43,7 +57,6 @@ class CategoryBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CategoryBloc bloc = context.read<CategoryBloc>();
-    bloc.add(CategoryEventGetData());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AssetsColor.youngGreen.withOpacity(20 / 100),
@@ -81,6 +94,20 @@ class CategoryBody extends StatelessWidget {
                     msg: "Gagal menghapus ${state.msgError}");
 
                 bloc.add(CategoryEventGetData());
+              } else if (state is CreateCategorySuccess) {
+                Message.showSuccessToast(msg: "Berhasil menambah kategori");
+                Navigator.popUntil(context,
+                    (route) => route.settings.name == RoutesPage.listCategory);
+                bloc.add(CategoryEventGetData());
+              } else if (state is CreateCategoryFailed) {
+                Message.showErrorToast(msg: "Gagal menambah kategori");
+              } else if (state is UpdateCategorySuccess) {
+                Message.showSuccessToast(msg: "Berhasil mengubah kategori");
+                Navigator.popUntil(context,
+                    (route) => route.settings.name == RoutesPage.listCategory);
+                bloc.add(CategoryEventGetData());
+              } else if (state is UpdateCategoryFailed) {
+                Message.showErrorToast(msg: "Gagal mengubah kategori");
               }
             },
             child: const SizedBox(),
@@ -89,7 +116,12 @@ class CategoryBody extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, RoutesPage.createProduct);
+          BottomSheetHelper.showCreateCategory(
+              context: context,
+              onClick: (name) {
+                bloc.add(CategoryEventCreate(categoryName: name));
+              },
+              textController: TextEditingController());
         },
         child: const Icon(Icons.add),
       ),
@@ -170,7 +202,21 @@ class CategoryList extends StatelessWidget {
                   borderRadius: BorderRadius.circular(100),
                   child: Material(
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        BottomSheetHelper.showUpdateCategory(
+                            context: context,
+                            onClick: (name) => bloc.add(CategoryEventUpdate(
+                                  idCategory: model[index].id ?? 0,
+                                  categroyName: name,
+                                )),
+                            category: model[index].name ?? "",
+                            textController: TextEditingController()
+                              ..value = TextEditingValue(
+                                  text: model[index].name ?? "",
+                                  selection: TextSelection.collapsed(
+                                      offset:
+                                          (model[index].name ?? "").length)));
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(5),
                         child: Icon(

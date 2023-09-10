@@ -10,6 +10,8 @@ abstract class CategoryRepository {
   Future<int> createCategory({required String name});
   Future<List<CategoryModel>> getCategory();
   Future<int> deleteCategory({required int idCategory});
+  Future<int> updateCategory(
+      {required int idCategory, required String categoryName});
 }
 
 class CategoryRepositoryImp implements CategoryRepository {
@@ -29,8 +31,21 @@ class CategoryRepositoryImp implements CategoryRepository {
     final res = await http.delete(
         Uri.parse(ApiClient.deleteCategory(idCategory)),
         headers: ApiClient.headersWithToken());
-    // log(Helper.messageShow(res));
-    log(res.body);
+    log(Helper.messageShow(res));
+    if (res.statusCode != 200) {
+      throw (Exception(Helper.generateResponse(res)));
+    }
+    return 200;
+  }
+
+  @override
+  Future<int> updateCategory(
+      {required int idCategory, required String categoryName}) async {
+    final res = await http.patch(
+        Uri.parse(ApiClient.updateCategory(idCategory)),
+        headers: ApiClient.headersWithToken(),
+        body: {'name': categoryName});
+    log(Helper.messageShow(res));
     if (res.statusCode != 200) {
       throw (Exception(Helper.generateResponse(res)));
     }

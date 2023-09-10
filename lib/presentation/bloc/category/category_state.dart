@@ -33,3 +33,17 @@ class DeleteCategoryFailed extends CategoryState {
   @override
   List<Object> get props => [msgError];
 }
+
+class CreateCategorySuccess extends CategoryState {}
+
+class CreateCategoryFailed extends CategoryState {
+  final String msgError;
+  const CreateCategoryFailed({required this.msgError});
+}
+
+class UpdateCategorySuccess extends CategoryState {}
+
+class UpdateCategoryFailed extends CategoryState {
+  final String msgError;
+  const UpdateCategoryFailed({required this.msgError});
+}

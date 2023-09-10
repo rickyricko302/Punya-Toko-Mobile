@@ -7,8 +7,8 @@ import '../../../data/constants/assets_color.dart';
 import '../textforms/text_form.dart';
 import '../texts/poppins_text.dart';
 
-class BottomSheetCreateCategory extends StatelessWidget {
-  const BottomSheetCreateCategory(
+class BottomSheetUpdateCategory extends StatelessWidget {
+  const BottomSheetUpdateCategory(
       {super.key, required this.onClick, required this.textController});
   final Function(String name) onClick;
   final TextEditingController textController;
@@ -25,7 +25,7 @@ class BottomSheetCreateCategory extends StatelessWidget {
           children: [
             Center(
               child: PoppinsText(
-                text: "Tambah Kategori",
+                text: "Ubah Kategori",
                 fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
               ),
@@ -41,8 +41,8 @@ class BottomSheetCreateCategory extends StatelessWidget {
             ),
             TextForm(
                 formController: textController,
-                hint: "Masukan nama kategori",
                 autoFocus: true,
+                hint: "Masukan nama kategori",
                 textInputType: TextInputType.text,
                 textInputAction: TextInputAction.next),
             const SizedBox(

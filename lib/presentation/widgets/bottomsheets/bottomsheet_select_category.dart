@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:punyatoko/presentation/bloc/createProduct/create_product_bloc.dart';
 import 'package:punyatoko/presentation/widgets/buttons/green_button.dart';
-import 'package:punyatoko/util/bottomsheet.dart';
+import 'package:punyatoko/util/bottomsheet_helper.dart';
 import '../../../data/constants/assets_color.dart';
 import '../texts/poppins_text.dart';
 
@@ -61,7 +61,8 @@ class BottomSheetSelectCategory extends StatelessWidget {
                     callback: () {
                       BottomSheetHelper.showCreateCategory(
                           context: context,
-                          bloc: bloc,
+                          onClick: (name) =>
+                              bloc.add(CreateCategoryEvent(name: name)),
                           textController: TextEditingController());
                     })),
           ),
