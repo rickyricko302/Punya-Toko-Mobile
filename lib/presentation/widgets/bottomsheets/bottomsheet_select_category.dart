@@ -4,13 +4,18 @@ import 'package:punyatoko/presentation/bloc/createProduct/create_product_bloc.da
 import 'package:punyatoko/presentation/widgets/buttons/green_button.dart';
 import 'package:punyatoko/util/bottomsheet_helper.dart';
 import '../../../data/constants/assets_color.dart';
+import '../../../domain/entities/category_entity.dart';
 import '../texts/poppins_text.dart';
 
 class BottomSheetSelectCategory extends StatelessWidget {
   const BottomSheetSelectCategory(
-      {super.key, required this.bloc, required this.textController});
+      {super.key,
+      required this.bloc,
+      required this.textController,
+      required this.entities});
   final CreateProductBloc bloc;
   final TextEditingController textController;
+  final List<CategoryEntity> entities;
 
   @override
   Widget build(BuildContext context) {
@@ -30,18 +35,18 @@ class BottomSheetSelectCategory extends StatelessWidget {
           ConstrainedBox(
             constraints: BoxConstraints(maxHeight: 0.5.sh),
             child: ListView.builder(
-                itemCount: 30,
+                itemCount: entities.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return ListTile(
                     onTap: () {
                       bloc.add(SelectCategoryEvent(index: index));
                       textController.value =
-                          TextEditingValue(text: index.toString());
+                          TextEditingValue(text: entities[index].name ?? "-");
                       Navigator.pop(context);
                     },
-                    title:
-                        PoppinsText(text: "kategori $index", fontSize: 15.sp),
+                    title: PoppinsText(
+                        text: entities[index].name ?? "-", fontSize: 15.sp),
                     trailing: Checkbox(
                         fillColor: MaterialStatePropertyAll(AssetsColor.green),
                         shape: const CircleBorder(),

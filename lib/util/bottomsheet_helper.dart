@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:punyatoko/presentation/bloc/createProduct/create_product_bloc.dart';
 import 'package:punyatoko/presentation/widgets/bottomsheets/bottomsheet_update_category.dart';
 
+import '../domain/entities/category_entity.dart';
 import '../presentation/widgets/bottomsheets/bottomsheet_create_category.dart';
 import '../presentation/widgets/bottomsheets/bottomsheet_select_category.dart';
 
@@ -9,7 +12,9 @@ class BottomSheetHelper {
   static void showSelectCategory(
       {required BuildContext context,
       required CreateProductBloc bloc,
-      required TextEditingController textController}) {
+      required TextEditingController textController,
+      required List<CategoryEntity> entities}) {
+    log(entities.length.toString());
     showModalBottomSheet(
         context: context,
         showDragHandle: true,
@@ -18,6 +23,7 @@ class BottomSheetHelper {
           return BottomSheetSelectCategory(
             bloc: bloc,
             textController: textController,
+            entities: entities,
           );
         });
   }

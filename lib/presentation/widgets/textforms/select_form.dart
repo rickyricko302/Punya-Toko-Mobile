@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:punyatoko/data/constants/status.dart';
 
 import '../../../data/constants/assets_color.dart';
 
@@ -8,11 +9,15 @@ class SelectForm extends StatelessWidget {
       {Key? key,
       required this.formController,
       required this.hint,
-      required this.onClick})
+      required this.onClick,
+      required this.onRefresh,
+      required this.status})
       : super(key: key);
   final TextEditingController formController;
   final String hint;
   final VoidCallback onClick;
+  final VoidCallback onRefresh;
+  final Status status;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -29,10 +34,24 @@ class SelectForm extends StatelessWidget {
       decoration: InputDecoration(
           hintStyle: GoogleFonts.poppins(color: AssetsColor.lightGrey),
           hintText: hint,
-          suffixIcon: Icon(
-            Icons.arrow_drop_down,
-            color: AssetsColor.grey,
-          )),
+          suffixIcon: status == Status.LOADING
+              ? const CircularProgressIndicator(
+                  strokeWidth: 3,
+                )
+              : status == Status.SUCCESS
+                  ? Icon(
+                      Icons.arrow_drop_down,
+                      color: AssetsColor.grey,
+                    )
+                  : InkWell(
+                      onTap: onRefresh,
+                      child: Icon(
+                        Icons.refresh,
+                        color: AssetsColor.red,
+                      ),
+                    ),
+          suffixIconConstraints:
+              const BoxConstraints(maxWidth: 24, maxHeight: 24)),
     );
   }
 }

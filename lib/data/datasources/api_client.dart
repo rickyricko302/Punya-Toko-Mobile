@@ -31,4 +31,6 @@ class ApiClient {
   static String updateCategory(int idCategory) {
     return "$_baseUrl/category/$idCategory";
   }
+
+  static String product = "$_baseUrl/product";
 }

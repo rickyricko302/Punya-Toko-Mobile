@@ -9,7 +9,11 @@ class Helper {
   }
 
   static String messageShow(http.Response res) {
-    return jsonDecode(res.body)['message'];
+    try {
+      return jsonDecode(res.body)['message'];
+    } catch (e) {
+      return 'undefinied msg';
+    }
   }
 
   /// Ini adalah fungsi untuk mengubah string ke mata uang indonesia

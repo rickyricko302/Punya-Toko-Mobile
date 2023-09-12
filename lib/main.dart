@@ -22,12 +22,13 @@ import 'package:punyatoko/presentation/pages/product/product_listing_page.dart';
 import 'package:punyatoko/presentation/pages/register_page.dart';
 import 'package:http/http.dart' as http;
 import 'data/repositories/category_repository.dart';
+import 'data/repositories/product_repository.dart';
 import 'domain/usecases/login_usecase.dart';
 import 'presentation/bloc/register/register_bloc.dart';
 
 void main() async {
   FlavorConfig(variables: {
-    'base_url': "http://192.168.98.222:8000/api",
+    'base_url': "http://192.168.24.222:8000/api",
   });
   await GetStorage.init();
   runApp(const MyApp());
@@ -48,6 +49,9 @@ class MyApp extends StatelessWidget {
             providers: [
               RepositoryProvider(
                 create: (context) => CategoryRepositoryImp(),
+              ),
+              RepositoryProvider(
+                create: (context) => ProductRepositoryImp(),
               ),
             ],
             child: MultiBlocProvider(
