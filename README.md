@@ -6,15 +6,15 @@ Rencananya ini adalah aplikasi mobile untuk mengelola stock barang dan mencatat 
 - [x] On Boarding
 - [x] Registrasi Akun
 - [x] Login Akun
-- [x] Remember Login 
+- [x] Remember Login
+- [x] CRUD Kategori Barang
 - [ ] Home (List Transaksi)
 - [ ] CRUD Barang
-- [ ] CRUD Kategori Barang
 - [ ] Profil
 - [ ] .......?
 
 ## Teknologi
-- Flutter 3.7.12 (Front End)
+- Flutter 3.10.6 (Front End)
   - State Management flutter bloc
   - Clean Architecture
 - PHP Laravel (Back End)
